@@ -1,4 +1,12 @@
 <?php
+
+/**
+*Functions file for unite child theme
+*
+*@author Butu Ordooter
+*
+**/
+
 function my_theme_enqueue_styles() {
 
     $parent_style = 'unite-style'; 
@@ -13,4 +21,76 @@ function my_theme_enqueue_styles() {
     );
 }
 add_action( 'wp_enqueue_scripts', 'my_theme_enqueue_styles' );
+
+/*Custom post type film*/
+
+function create_post_type() {
+  register_post_type( 'codeline_films',
+    array(
+      'labels' => array(
+        'name' => __( 'Films' ),
+        'singular_name' => __( 'Film' )
+      ),
+      'public' => true,
+      'has_archive' => true,
+      'supports' => array( 'title', 'editor', 'custom-fields' )
+    )
+  );
+}
+add_action( 'init', 'create_post_type' );
+
+/* Taxonomies for codeline_films*/
+
+function actors_init() {
+	// create a new taxonomy actor
+	register_taxonomy(
+		'actors',
+		'codeline_films',
+		array(
+			'label' => __( 'Actors' ),
+			'rewrite' => array( 'slug' => 'actor' ),
+		)
+	);
+}
+add_action( 'init', 'actors_init' );
+
+function genre_init() {
+	// create a new taxonomy genre
+	register_taxonomy(
+		'genre',
+		'codeline_films',
+		array(
+			'label' => __( 'Genre' ),
+			'rewrite' => array( 'slug' => 'genre' ),
+		)
+	);
+}
+add_action( 'init', 'genre_init' );
+
+function year_init() {
+	// create a new taxonomy year
+	register_taxonomy(
+		'year',
+		'codeline_films',
+		array(
+			'label' => __( 'Year' ),
+			'rewrite' => array( 'slug' => 'year' ),
+		)
+	);
+}
+add_action( 'init', 'year_init' );
+
+function country_init() {
+	// create a new taxonomy country
+	register_taxonomy(
+		'country',
+		'codeline_films',
+		array(
+			'label' => __( 'Country' ),
+			'rewrite' => array( 'slug' => 'country' ),
+		)
+	);
+}
+add_action( 'init', 'country_init' );
 ?>
+
