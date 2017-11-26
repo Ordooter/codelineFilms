@@ -33,7 +33,7 @@ function create_post_type() {
       ),
       'public' => true,
       'has_archive' => true,
-      'supports' => array( 'title', 'editor', 'custom-fields' )
+      'supports' => array( 'title', 'editor', 'custom-fields', 'page-layout' )
     )
   );
 }
@@ -92,5 +92,17 @@ function country_init() {
 	);
 }
 add_action( 'init', 'country_init' );
+
+function films_shortcode($atts) {
+	//function to add last 5 films
+	ob_start();
+	$query = new WP_Query( array(
+		'post_type' => 'codeline_films',
+		'posts-per-page' => 5,
+		'orderby' => 'title',
+	) );
+	if ($query->have_posts() ) return $query;
+	}
+add_shortcode('list-films', 'films_shortcode');
 ?>
 
